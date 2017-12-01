@@ -27,9 +27,12 @@ typedef struct {
  Define vertex data for a triangle to use in example
  */
 static const SceneVertex vertices[] = {
-    {{-0.5f, -0.5f, 0.0}}, // lower left corner
-    {{ 0.5f, -0.5f, 0.0}}, // lower right corner
-    {{-0.5f,  0.5f, 0.0}}, // upper left corner
+    {{-0.5f, -0.5f, 0.0f}},  // first triangle
+    {{ 0.5f, -0.5f, 0.0f}},
+    {{-0.5f,  0.5f, 0.0f}},
+    {{ 0.5f, -0.5f, 0.0f}},  // second triangle
+    {{-0.5f,  0.5f, 0.0f}},
+    {{ 0.5f,  0.5f, 0.0f}},
 };
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -102,7 +105,7 @@ static const SceneVertex vertices[] = {
     [(GLESContext *)self.context clear:GL_COLOR_BUFFER_BIT];
     
     [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribPosition
-                           numberOfCoordinates:sizeof(vertices) / sizeof(SceneVertex)
+                           numberOfCoordinates:3
                                   attribOffset:offsetof(SceneVertex, positionCoords)
                                   shouldEnable:YES];
     
