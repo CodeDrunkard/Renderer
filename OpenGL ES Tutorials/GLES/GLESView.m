@@ -20,19 +20,20 @@
  This data type is used to store information for each vertex
  */
 typedef struct {
-    GLKVector3  positionCoords;
+    GLKVector3 positionCoords;
+    GLKVector2 textureCoords;
 } SceneVertex;
 
 /**
  Define vertex data for a triangle to use in example
  */
 static const SceneVertex vertices[] = {
-    {{-0.5f, -0.5f, 0.0f}},  // first triangle
-    {{ 0.5f, -0.5f, 0.0f}},
-    {{-0.5f,  0.5f, 0.0f}},
-    {{ 0.5f, -0.5f, 0.0f}},  // second triangle
-    {{-0.5f,  0.5f, 0.0f}},
-    {{ 0.5f,  0.5f, 0.0f}},
+    {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f}},  // first triangle
+    {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}},
+    {{-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}},  // second triangle
+    {{-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f,  0.5f, 0.0f}, {1.0f, 1.0f}},
 };
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -56,6 +57,7 @@ static const SceneVertex vertices[] = {
     [self setupContext];
     [self setupEffect];
     [self setupBuffer];
+    [self setupTexture];
 }
 
 - (void)dealloc {
@@ -98,6 +100,15 @@ static const SceneVertex vertices[] = {
                                                                             usage:GL_STATIC_DRAW];
 }
 
+- (void)setupTexture {
+    CGImageRef imageRef = [[UIImage imageNamed:@"sky.jpeg"] CGImage];
+    GLKTextureInfo *textureInfo = [GLKTextureLoader textureWithCGImage:imageRef
+                                                               options:nil
+                                                                 error:NULL];
+    self.baseEffect.texture2d0.name = textureInfo.name;
+    self.baseEffect.texture2d0.target = textureInfo.target;
+}
+
 - (void)draw {
     [self.baseEffect prepareToDraw];
     
@@ -107,6 +118,10 @@ static const SceneVertex vertices[] = {
     [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribPosition
                            numberOfCoordinates:3
                                   attribOffset:offsetof(SceneVertex, positionCoords)
+                                  shouldEnable:YES];
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord0
+                           numberOfCoordinates:2
+                                  attribOffset:offsetof(SceneVertex, textureCoords)
                                   shouldEnable:YES];
     
     // Draw triangles using the first three vertices in the

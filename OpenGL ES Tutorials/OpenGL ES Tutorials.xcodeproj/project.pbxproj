@@ -16,6 +16,7 @@
 		6B8A44FA1FD15614004CDDE5 /* GLESContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A44F51FD15607004CDDE5 /* GLESContext.m */; };
 		6B8A44FB1FD15614004CDDE5 /* GLESVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A44F71FD15607004CDDE5 /* GLESVertexAttribArrayBuffer.m */; };
 		6B8A44FC1FD15614004CDDE5 /* GLESView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A44F91FD15607004CDDE5 /* GLESView.m */; };
+		6B8A44FF1FD15B47004CDDE5 /* sky.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B8A44FE1FD15AFE004CDDE5 /* sky.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		6B8A44F71FD15607004CDDE5 /* GLESVertexAttribArrayBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLESVertexAttribArrayBuffer.m; sourceTree = "<group>"; };
 		6B8A44F81FD15607004CDDE5 /* GLESView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLESView.h; sourceTree = "<group>"; };
 		6B8A44F91FD15607004CDDE5 /* GLESView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLESView.m; sourceTree = "<group>"; };
+		6B8A44FE1FD15AFE004CDDE5 /* sky.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				6B8A44E81FD15543004CDDE5 /* LaunchScreen.storyboard */,
 				6B8A44EB1FD15543004CDDE5 /* Info.plist */,
 				6B8A44EC1FD15543004CDDE5 /* main.m */,
+				6B8A44FE1FD15AFE004CDDE5 /* sky.jpeg */,
 			);
 			path = "OpenGL ES Tutorials";
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				6B8A44EA1FD15543004CDDE5 /* LaunchScreen.storyboard in Resources */,
 				6B8A44E71FD15543004CDDE5 /* Assets.xcassets in Resources */,
 				6B8A44E51FD15543004CDDE5 /* Main.storyboard in Resources */,
+				6B8A44FF1FD15B47004CDDE5 /* sky.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
