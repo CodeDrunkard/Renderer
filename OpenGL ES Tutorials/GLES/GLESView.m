@@ -12,6 +12,9 @@
 
 @interface GLESView ()
 
+@property (strong, nonatomic) GLKTextureInfo *textureInfo0;
+@property (strong, nonatomic) GLKTextureInfo *textureInfo1;
+
 @end
 
 @implementation GLESView
@@ -101,17 +104,20 @@ static const SceneVertex vertices[] = {
 }
 
 - (void)setupTexture {
-    CGImageRef imageRef = [[UIImage imageNamed:@"sky.jpeg"] CGImage];
-    GLKTextureInfo *textureInfo = [GLKTextureLoader textureWithCGImage:imageRef
-                                                               options:nil
+    CGImageRef imageRef0 = [[UIImage imageNamed:@"sky.jpeg"] CGImage];
+    self.textureInfo0 = [GLKTextureLoader textureWithCGImage:imageRef0
+                                                                options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil]
                                                                  error:NULL];
-    self.baseEffect.texture2d0.name = textureInfo.name;
-    self.baseEffect.texture2d0.target = textureInfo.target;
+    
+    CGImageRef imageRef1 = [[UIImage imageNamed:@"hedy.png"] CGImage];
+    self.textureInfo1 = [GLKTextureLoader textureWithCGImage:imageRef1
+                                                                options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil]
+                                                                 error:NULL];
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 - (void)draw {
-    [self.baseEffect prepareToDraw];
-    
     // Clear back frame buffer (erase previous drawing)
     [(GLESContext *)self.context clear:GL_COLOR_BUFFER_BIT];
     
@@ -123,6 +129,20 @@ static const SceneVertex vertices[] = {
                            numberOfCoordinates:2
                                   attribOffset:offsetof(SceneVertex, textureCoords)
                                   shouldEnable:YES];
+    
+    self.baseEffect.texture2d0.name = self.textureInfo0.name;
+    self.baseEffect.texture2d0.target = self.textureInfo0.target;
+    [self.baseEffect prepareToDraw];
+    
+    // Draw triangles using the first three vertices in the
+    // currently bound vertex buffer
+    [self.vertexBuffer drawArrayWithMode:GL_TRIANGLES
+                        startVertexIndex:0
+                        numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)];
+    
+    self.baseEffect.texture2d0.name = self.textureInfo1.name;
+    self.baseEffect.texture2d0.target = self.textureInfo1.target;
+    [self.baseEffect prepareToDraw];
     
     // Draw triangles using the first three vertices in the
     // currently bound vertex buffer
