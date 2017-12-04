@@ -109,12 +109,17 @@ static const SceneVertex vertices[] = {
                                                                 options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil]
                                                                  error:NULL];
     
+    self.baseEffect.texture2d0.name = self.textureInfo0.name;
+    self.baseEffect.texture2d0.target = self.textureInfo0.target;
+    
     CGImageRef imageRef1 = [[UIImage imageNamed:@"hedy.png"] CGImage];
     self.textureInfo1 = [GLKTextureLoader textureWithCGImage:imageRef1
                                                                 options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil]
                                                                  error:NULL];
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    self.baseEffect.texture2d1.name = self.textureInfo1.name;
+    self.baseEffect.texture2d1.target = self.textureInfo1.target;
+    self.baseEffect.texture2d1.envMode = GLKTextureEnvModeDecal;
 }
 
 - (void)draw {
@@ -129,19 +134,11 @@ static const SceneVertex vertices[] = {
                            numberOfCoordinates:2
                                   attribOffset:offsetof(SceneVertex, textureCoords)
                                   shouldEnable:YES];
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord1
+                           numberOfCoordinates:2
+                                  attribOffset:offsetof(SceneVertex, textureCoords)
+                                  shouldEnable:YES];
     
-    self.baseEffect.texture2d0.name = self.textureInfo0.name;
-    self.baseEffect.texture2d0.target = self.textureInfo0.target;
-    [self.baseEffect prepareToDraw];
-    
-    // Draw triangles using the first three vertices in the
-    // currently bound vertex buffer
-    [self.vertexBuffer drawArrayWithMode:GL_TRIANGLES
-                        startVertexIndex:0
-                        numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)];
-    
-    self.baseEffect.texture2d0.name = self.textureInfo1.name;
-    self.baseEffect.texture2d0.target = self.textureInfo1.target;
     [self.baseEffect prepareToDraw];
     
     // Draw triangles using the first three vertices in the
